@@ -576,7 +576,7 @@ def main():
     if args.filename_inject:
         inject_exist_files(args.server, md5_org_name, args.filename_inject)
     elif args.filenames:
-        #create_injected_files(args.server, md5_org_name, args.filenames)
+        create_injected_files(args.server, md5_org_name, args.filenames)
         create_injected_deanon_files(args.server, md5_org_name, args.filenames)
     else:
         print("Needed necessary keys: --inject or --create")
