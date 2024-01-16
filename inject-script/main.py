@@ -1,5 +1,4 @@
 #!/usr/bin/env 
-# python main.py --server 192.168.88.213 --org_name FLAB --create test
 from __future__ import print_function
 
 import argparse
