@@ -48,7 +48,7 @@ class Source_ips(Base):
     __tablename__ = "source_ips"
     
     id = Column("id", Integer, primary_key=True)
-    source_ip = Column("source_ip", String, unique=True)
+    source_ip = Column("source_ip", String)
     date = Column("time", String)
 
     def __init__(self, source_ip=None, date=None):

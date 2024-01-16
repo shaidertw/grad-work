@@ -113,8 +113,6 @@ def parse_smb(data:bytes) -> bool:
     path_offset = decode_int(data[offset + 0x58:][:0x4])
     path_size = decode_int(data[offset + 0x5C:][:0x4])
     path = decode_string(data[offset+path_offset:][:path_size])
-    print(path)
-    print(len(path))
     path = path[path.rfind("\\") + 1 : ]
     service.add_path_packet(session_id=session_id, md5_org_name=path)
     return True
