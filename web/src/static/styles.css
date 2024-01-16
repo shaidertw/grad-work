@@ -1,0 +1,101 @@
+.title {
+    font-family: 'Roboto', sans-serif;
+    font-size: 24px;
+    color: #333;
+    /* Другие стили ... */
+}
+
+.btn-new {
+    width: 100px;
+    border: none;
+    border-radius: 10px;
+    text-decoration: none;
+    color: white;
+    background: #296be0;
+    box-shadow: 0 5px 0 #003CC5;
+}
+
+.btn-new:hover {
+    box-shadow: none;
+    position: relative;
+    top: 5px;
+}
+
+.btn-new.button2 {
+    background-color: #d94848;
+    color: white;
+    background: #f60b26;
+    box-shadow: 0 5px 0 #c5003b;
+}
+
+.btn-new.button2:hover {
+    box-shadow: none;
+    position: relative;
+    top: 5px;
+}
+
+.btn-new.button3 {
+    background-color: #26aa6f;
+    color: white;
+    background: #07753c;
+    box-shadow: 0 5px 0 #095014;
+}
+.btn-new.button3:hover {
+    box-shadow: none;
+    position: relative;
+    top: 5px;
+}
+
+.main-container {
+  display: flex;
+}
+    .logs-hash {
+      width: 40%;
+      margin-right: 40px;
+      margin-left: 40px;
+      max-height: 84vh;
+      border: 2px solid #000;
+      overflow-y: auto;
+    }
+    .scroll-container {
+      max-height: 84vh;
+      width: 50%;
+      overflow-y: auto;
+    }
+
+    /* Стили для элементов списка */
+    .list-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px;
+    }
+
+    .list-item .buttons {
+      display: flex;
+    }
+
+    .list-item .buttons form {
+      margin-left: 10px; /* Расстояние между кнопками */
+}
+
+
+    .search-container {
+      display: flex;
+      align-items: center;
+      padding: 20px;
+      background-color: #f0f0f0;
+    }
+
+    .search-input {
+      font-size: 15px;
+      padding: 10px;
+      width: 70%;
+    }
+
+    .search-button, .back-button {
+      font-size: 15px;
+      padding: 10px;
+      margin-left: 10px;
+    }
+

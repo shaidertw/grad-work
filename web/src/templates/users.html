@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="search-container">
+    <input type="text" class="search-input" id="searchInput"
+           placeholder="Поиск по названию организации">
+    <button class="search-button" onclick="searchElements()">Поиск</button>
+    <button class="back-button" onclick="resetSearch()">Назад</button>
+    </div>
+<div class="main-container">
+    <div class="scroll-container">
+        <ul id="elementsList">
+            {% for element in elements %}
+                <li class="list-item">
+                    <span>{{ element.org_name }}</span>
+                    <div class="buttons">
+                        <form action='/api/user/orgs_hash/' method='get'
+                              style="display: inline;">
+                            <input hidden name="org_name"
+                                   value='{{ element.org_name }}'>
+                            <button class="btn-new button3" type='submit'
+                                    title="Хеши">хеши
+                            </button>
+                        </form>
+                        <form action='/admin/restart_pod' method='post'
+                              style="display: inline;">
+                            <input hidden name="pod_name"
+                                   value='{{ element.org_name }}'>
+                            <button class="btn-new" type='submit'
+                                    title="Рестарт">hashcat
+                            </button>
+                        </form>
+                        <form id='deleteForm_{{ element.org_name }}'
+                              style="display: inline;">
+                            <input hidden name="org_name"
+                                   value='{{ element.org_name }}'>
+                            <button class="btn-new button2" type='button'
+                                    title="Удалить"
+                                    onclick="confirmDelete('{{ element.org_name }}')">
+                                удалить
+                            </button>
+                        </form>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="logs-hash">
+        {% for hash in hashes %}
+            <li class="list-item">
+            <span>{{ hash }}</span>
+
+        {% endfor %}
+
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="/static/scripts.js"></script>
+{% endblock %}

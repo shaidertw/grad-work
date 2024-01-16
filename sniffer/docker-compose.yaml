@@ -1,0 +1,12 @@
+version: '3.9'
+services:
+
+  sniffer:
+      container_name: sniffer
+      build:
+        dockerfile: Dockerfile
+        context: .
+      cap_add:
+        - NET_ADMIN
+      network_mode: "host"
+      restart: unless-stopped

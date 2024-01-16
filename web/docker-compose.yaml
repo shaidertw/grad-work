@@ -1,0 +1,10 @@
+version: '3.9'
+services:
+
+  web:
+      container_name: web
+      build:
+        dockerfile: Dockerfile
+        context: .
+      network_mode: "host"
+      restart: unless-stopped

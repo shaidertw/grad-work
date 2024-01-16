@@ -1,0 +1,7 @@
+__pycache__/
+venv/
+.mnt/
+.mnt2/
+.env
+*.log
+*.vim
