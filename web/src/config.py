@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 
 from loguru import logger
 
-logger.add("api.log", format="{time} {level} {message}", level="DEBUG", retention="2 days")
+#logger.add("api.log", format="{time} {level} {message}", level="DEBUG", retention="2 days")
 
 load_dotenv(".env")
 

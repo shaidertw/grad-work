@@ -3,7 +3,6 @@ from fastapi import FastAPI, Request, Form, BackgroundTasks
 from fastapi.responses import RedirectResponse
 from fastapi.templating import Jinja2Templates
 
-#import src.user.service as service
 from src.user import service
 from src.schemas import DefaultResponse
 from src.user.schemas import UserResponse, ListUserResponse, UserRequest, ListUser
